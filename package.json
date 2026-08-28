@@ -15,7 +15,7 @@
     "check:no-ads": "node scripts/check-no-ads.js",
     "lint": "biome check --fix src/",
     "dev": "parcel index.html --port 1235",
-    "build": "parcel build index.html --public-url /roulette/ && node scripts/build-sw.js"
+    "build": "parcel build index.html --public-url /roulette/ && node scripts/build-sw.js && node scripts/copy-license.js"
   },
   "dependencies": {
     "box2d-wasm": "^7.0.0"

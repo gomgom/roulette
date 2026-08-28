@@ -17,6 +17,11 @@ assert(!forbidden.test(readFileSync('index.html', 'utf8')));
 assert(existsSync('dist/index.html'), 'Run yarn build before this check');
 scan('dist');
 const html = readFileSync('dist/index.html', 'utf8');
+assert.deepEqual(readFileSync('dist/LICENSE.txt'), readFileSync('LICENSE'), 'Published MIT notice must match LICENSE');
+const footer = html.match(/<div class=["']?copyright["']?>([\s\S]*?)<\/div>/)?.[1] ?? '';
+for (const url of ['https://lazygyu.net', 'https://gomgom.net', 'https://gomgom.github.io/roulette/LICENSE.txt']) {
+  assert(footer.includes(`href=${url}`) || footer.includes(`href="${url}"`), `Missing footer link: ${url}`);
+}
 for (const match of html.matchAll(/(?:src|href)=["']?(\/roulette\/[^\s"'<>]+)/g)) {
   assert(existsSync(join('dist', match[1].slice('/roulette/'.length))), `Missing asset: ${match[1]}`);
 }
